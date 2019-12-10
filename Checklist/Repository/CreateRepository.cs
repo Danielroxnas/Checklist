@@ -1,6 +1,7 @@
 ﻿using Checklist.Entity;
 using Checklist.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Checklist.Repository
 {
@@ -31,6 +32,17 @@ namespace Checklist.Repository
             }
             _checklistContext.Groceries.Add(grocery);
             _checklistContext.SaveChanges();
+        }
+
+        public void CreateGroceries(List<Grocery> groceries)
+        {
+            if (groceries is null)
+            {
+                throw new ArgumentNullException(nameof(groceries));
+            }
+            _checklistContext.Groceries.AddRange(groceries);
+            _checklistContext.SaveChanges();
+
         }
 
         public void CreateCategory(Category category)
