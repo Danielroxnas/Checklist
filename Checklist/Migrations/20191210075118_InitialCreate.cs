@@ -33,7 +33,7 @@ namespace Checklist.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Checklists",
+                name: "ShoppingList",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -41,9 +41,9 @@ namespace Checklist.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Checklists", x => x.Id);
+                    table.PrimaryKey("PK_ShoppingList", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Checklists_Users_UserId",
+                        name: "FK_ShoppingList_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -57,28 +57,28 @@ namespace Checklist.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     CategoryId = table.Column<Guid>(nullable: false),
-                    ChecklistId = table.Column<Guid>(nullable: true)
+                    ShoppingListId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Groceries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Groceries_Checklists_ChecklistId",
-                        column: x => x.ChecklistId,
-                        principalTable: "Checklists",
+                        name: "FK_Groceries_ShoppingList_ShoppingListId",
+                        column: x => x.ShoppingListId,
+                        principalTable: "ShoppingList",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Checklists_UserId",
-                table: "Checklists",
-                column: "UserId");
+                name: "IX_Groceries_ShoppingListId",
+                table: "Groceries",
+                column: "ShoppingListId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Groceries_ChecklistId",
-                table: "Groceries",
-                column: "ChecklistId");
+                name: "IX_ShoppingList_UserId",
+                table: "ShoppingList",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -90,7 +90,7 @@ namespace Checklist.Migrations
                 name: "Groceries");
 
             migrationBuilder.DropTable(
-                name: "Checklists");
+                name: "ShoppingList");
 
             migrationBuilder.DropTable(
                 name: "Users");
