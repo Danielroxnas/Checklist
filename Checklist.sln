@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checklist", "Checklist\Checklist.csproj", "{A07EF167-F1A8-48F5-A181-15C483B1A557}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChecklistTests", "ChecklistTests\ChecklistTests.csproj", "{6047478E-48DB-4CEC-A5E7-46DB454EB629}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A07EF167-F1A8-48F5-A181-15C483B1A557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A07EF167-F1A8-48F5-A181-15C483B1A557}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A07EF167-F1A8-48F5-A181-15C483B1A557}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A07EF167-F1A8-48F5-A181-15C483B1A557}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6047478E-48DB-4CEC-A5E7-46DB454EB629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6047478E-48DB-4CEC-A5E7-46DB454EB629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6047478E-48DB-4CEC-A5E7-46DB454EB629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6047478E-48DB-4CEC-A5E7-46DB454EB629}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0D3F850-C563-4B96-9F50-F62208FCE5AA}
+	EndGlobalSection
+EndGlobal
