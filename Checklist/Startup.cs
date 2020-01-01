@@ -1,4 +1,5 @@
 using Checklist.Entity;
+using Checklist.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -24,7 +25,7 @@ namespace Checklist
             services.AddDbContext<ChecklistContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
-
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
