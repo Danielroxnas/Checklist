@@ -39,23 +39,28 @@ namespace Checklist.Repository
             return _dbset;
         }
 
-        //public T GetById(Guid id)
-        //{
-        //    _dbset.AsNoTracking().FirstOrDefaultAsync(x => x.id)
-        //}
+        public T GetById(Guid id)
+        {
+            return _dbset.Find(id);
+        }
 
-        public void Inserts(List<T> entity)
+        public void Inserts(List<T> entities)
+        {
+            if (entities is null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+            _dbset.AddRange(entities);
+        }
+        public void Update(T entity)
         {
             if (entity is null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            _dbset.AddRange(entity);
+            _dbset.Attach(entity);
+            _checklistContext.Entry(entity).State = EntityState.Modified;
         }
 
-        public T Get()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
