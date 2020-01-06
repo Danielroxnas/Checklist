@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Checklist.Models;
 
 namespace Checklist.Services
@@ -6,5 +7,7 @@ namespace Checklist.Services
     public interface ICategoryService
     {
         IEnumerable<Category> GetAllCategories();
+        void Insert(Category grocery);
+        Category GetCategoryById(Guid id);
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Checklist.Migrations
 {
     [DbContext(typeof(ChecklistContext))]
-    [Migration("20191210075118_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200102140546_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

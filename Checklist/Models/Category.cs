@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Checklist.Models
 {
-    public class Category : IBaseEntity
+    public class Category 
     {
         [Key]
         public Guid Id { get; set; }

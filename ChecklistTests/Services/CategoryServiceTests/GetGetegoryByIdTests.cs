@@ -9,23 +9,23 @@ using System.Linq;
 
 namespace ChecklistTests.Services.CategoryServiceTests
 {
-    public class GetAllCategoriesTests
+    public class GetGetegoryByIdTests
     {
         [Test]
-        public void It_should_get_all_categories()
+        public void It_should_get_category_by_id()
         {
             var repository = Mock.Of<IBaseRepository<Category>>();
             var unitOfWork = Mock.Of<IUnitOfWork>();
+
+            Guid id = Guid.NewGuid();
+            var category = new Category { Id = id, Name = "cat1" };
             
-            var categories = new List<Category> {
-                new Category { Id = Guid.NewGuid(), Name = "cat1" },
-                new Category { Id = Guid.NewGuid(), Name = "cat2" }} ;
-            
-            Mock.Get(repository).Setup(x => x.Get(null,null)).Returns(categories);
+            Mock.Get(repository).Setup(x => x.GetById(category.Id)).Returns(category);
 
             var sut = new CategoryService(repository, unitOfWork);
-            var result = sut.GetAllCategories();
-            Assert.That(result.Count(), Is.EqualTo(2));
+            var result = sut.GetCategoryById(category.Id);
+            Assert.That(result.Id, Is.EqualTo(id));
+            Assert.That(result.Name, Is.EqualTo("cat1"));
         }
     }
 }

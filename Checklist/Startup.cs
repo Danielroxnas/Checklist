@@ -28,6 +28,7 @@ namespace Checklist
             services.AddControllersWithViews();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

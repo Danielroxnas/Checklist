@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Checklist.Entity
 {
-    public class ChecklistContext : DbContext, IChecklistContext
+    public class ChecklistContext : DbContext
     {
         public ChecklistContext(DbContextOptions options) : base(options)
         {

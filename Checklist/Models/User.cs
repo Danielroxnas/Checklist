@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Checklist.Models
 {
-    public class User : IBaseEntity
+    public class User
     {
         [Key]
         public Guid Id { get; set; }

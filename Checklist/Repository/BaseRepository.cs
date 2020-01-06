@@ -1,10 +1,9 @@
 ﻿using Checklist.Entity;
-using Checklist.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Checklist.Repository
 {
@@ -19,7 +18,6 @@ namespace Checklist.Repository
             _dbset = _checklistContext.Set<T>();
         }
 
-
         public void Insert(T entity)
         {
             if (entity is null)
@@ -29,15 +27,16 @@ namespace Checklist.Repository
             _dbset.Add(entity);
         }
 
-        public void Commit()
+        public IEnumerable<T> GetByExpression(Expression<Func<T, bool>> expression)
         {
-            _checklistContext.SaveChanges();
+            return _dbset.Where(expression);
         }
 
-        public IEnumerable<T> GetAll()
-        {
-            return _dbset;
-        }
+
+        //public IEnumerable<T> GetAll()
+        //{
+        //    return _dbset;
+        //}
 
         public T GetById(Guid id)
         {
@@ -52,6 +51,7 @@ namespace Checklist.Repository
             }
             _dbset.AddRange(entities);
         }
+
         public void Update(T entity)
         {
             if (entity is null)
@@ -62,5 +62,21 @@ namespace Checklist.Repository
             _checklistContext.Entry(entity).State = EntityState.Modified;
         }
 
+        public void Delete(T entity)
+        {
+            if (entity is null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            _dbset.Remove(entity);
+        }
+
+        public IEnumerable<T> Get(int? skip, int? take)
+        {
+            IQueryable<T> result = _dbset;
+            if (skip.HasValue) result = result.Skip(skip.Value);
+            if (take.HasValue) result = result.Take(take.Value);
+            return result;
+        }
     }
 }

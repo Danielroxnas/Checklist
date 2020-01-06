@@ -1,14 +1,14 @@
-﻿using Checklist.Entity;
-using Checklist.Models;
+﻿using Checklist.Models;
 using Checklist.Repository;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ChecklistTests.Repository.BaseRepositoryTests
 {
-    public class GetByIdTests : _InMemoryOptions
+    public class GetByExpressionTests : _InMemoryOptions
     {
         [Test]
         public void It_shall_get_category_by_id()
@@ -21,11 +21,10 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
                 new Category{Id = charkId, Name = "Chark" }});
             var unitOfWork = new UnitOfWork(_context);
             unitOfWork.Save();
-            var result = sut.GetById(mejeriId);
-            Assert.That(result.Id, Is.EqualTo(mejeriId));
-            Assert.That(result.Name, Is.EqualTo("Mejeri"));
+            var result = sut.GetByExpression(x =>  x.Name.Contains("Mej"));
+            Assert.That(result.First().Id, Is.EqualTo(mejeriId));
+            Assert.That(result.First().Name, Is.EqualTo("Mejeri"));
 
         }
-
     }
 }
