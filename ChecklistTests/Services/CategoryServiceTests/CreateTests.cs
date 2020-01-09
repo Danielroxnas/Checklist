@@ -7,7 +7,7 @@ using System;
 
 namespace ChecklistTests.Services.CategoryServiceTests
 {
-    public class InsertTests
+    public class CreateTests
     {
         [Test]
         public void It_should_call_insert()
@@ -16,10 +16,10 @@ namespace ChecklistTests.Services.CategoryServiceTests
             var uow = Mock.Of<IUnitOfWork>();
 
             var sut = new CategoryService(repository,uow);
-            var category = new Category { Id = Guid.NewGuid(), Name = "Test" };
-            sut.Insert(category);
+            var category = new Category { CategoryId = Guid.NewGuid(), CategoryName = "Test" };
+            sut.Create(category);
 
-            Mock.Get(repository).Verify(x => x.Insert(category), Times.Once);
+            Mock.Get(repository).Verify(x => x.Create(category), Times.Once);
             Mock.Get(uow).Verify(x => x.Save(), Times.Once);
         }
     }

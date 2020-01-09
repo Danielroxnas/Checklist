@@ -1,9 +1,10 @@
-﻿using Checklist.Models;
+﻿using Checklist.DTO;
+using Checklist.Models;
 
-namespace Checklist.Controllers
+namespace Checklist.Services
 {
     public interface IGroceryService
     {
-        void Save(Grocery grocery);
+        void Create(Grocery grocery);
     }
 }

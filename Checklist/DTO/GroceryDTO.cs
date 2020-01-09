@@ -7,7 +7,8 @@ namespace Checklist.DTO
 {
     public class GroceryDTO
     {
-        public string Name { get; set; }
+        public Guid GroceryId { get; set; }
+        public string GroceryName { get; set; }
         public Guid CategoryId { get; set; }
     }
 }

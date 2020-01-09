@@ -16,14 +16,14 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
             var mejeriId = Guid.NewGuid();
             var charkId = Guid.NewGuid();
             var sut = new BaseRepository<Category>(_context);
-            sut.Inserts(new List<Category>{
-                new Category {Id = mejeriId, Name = "Mejeri" },
-                new Category{Id = charkId, Name = "Chark" }});
+            sut.Create(new List<Category>{
+                new Category {CategoryId = mejeriId, CategoryName = "Mejeri" },
+                new Category{CategoryId = charkId, CategoryName = "Chark" }});
             var unitOfWork = new UnitOfWork(_context);
             unitOfWork.Save();
-            var result = sut.GetByExpression(x =>  x.Name.Contains("Mej"));
-            Assert.That(result.First().Id, Is.EqualTo(mejeriId));
-            Assert.That(result.First().Name, Is.EqualTo("Mejeri"));
+            var result = sut.GetByExpression(x =>  x.CategoryName.Contains("Mej"));
+            Assert.That(result.First().CategoryId, Is.EqualTo(mejeriId));
+            Assert.That(result.First().CategoryName, Is.EqualTo("Mejeri"));
 
         }
     }

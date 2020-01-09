@@ -18,7 +18,7 @@ namespace Checklist.Repository
             _dbset = _checklistContext.Set<T>();
         }
 
-        public void Insert(T entity)
+        public void Create(T entity)
         {
             if (entity is null)
             {
@@ -32,18 +32,12 @@ namespace Checklist.Repository
             return _dbset.Where(expression);
         }
 
-
-        //public IEnumerable<T> GetAll()
-        //{
-        //    return _dbset;
-        //}
-
         public T GetById(Guid id)
         {
             return _dbset.Find(id);
         }
 
-        public void Inserts(List<T> entities)
+        public void Create(IEnumerable<T> entities)
         {
             if (entities is null)
             {

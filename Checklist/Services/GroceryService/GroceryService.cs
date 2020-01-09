@@ -1,7 +1,9 @@
-﻿using Checklist.Models;
+﻿using Checklist.DTO;
+using Checklist.Models;
 using Checklist.Repository;
+using Checklist.Services;
 
-namespace Checklist.Controllers
+namespace Checklist.Services
 {
     public class GroceryService : IGroceryService
     {
@@ -14,9 +16,10 @@ namespace Checklist.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public void Save(Grocery grocery)
+
+        public void Create(Grocery grocery)
         {
-            _baseRepository.Insert(grocery);
+            _baseRepository.Create(grocery);
             _unitOfWork.Save();
         }
     }

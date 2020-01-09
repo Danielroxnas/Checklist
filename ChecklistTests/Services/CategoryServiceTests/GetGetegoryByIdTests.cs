@@ -18,14 +18,14 @@ namespace ChecklistTests.Services.CategoryServiceTests
             var unitOfWork = Mock.Of<IUnitOfWork>();
 
             Guid id = Guid.NewGuid();
-            var category = new Category { Id = id, Name = "cat1" };
+            var category = new Category { CategoryId = id, CategoryName = "cat1" };
             
-            Mock.Get(repository).Setup(x => x.GetById(category.Id)).Returns(category);
+            Mock.Get(repository).Setup(x => x.GetById(category.CategoryId)).Returns(category);
 
             var sut = new CategoryService(repository, unitOfWork);
-            var result = sut.GetCategoryById(category.Id);
-            Assert.That(result.Id, Is.EqualTo(id));
-            Assert.That(result.Name, Is.EqualTo("cat1"));
+            var result = sut.GetCategoryById(category.CategoryId);
+            Assert.That(result.CategoryId, Is.EqualTo(id));
+            Assert.That(result.CategoryName, Is.EqualTo("cat1"));
         }
     }
 }

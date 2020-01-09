@@ -18,17 +18,17 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
                 var charkId = Guid.NewGuid();
                 var sut = new BaseRepository<Category>(_context);
                 var categories = new List<Category>{
-                new Category {Id = mejeriId, Name = "Mejeri" },
-                new Category{Id = charkId, Name = "Chark" }};
-                sut.Inserts(categories);
+                new Category {CategoryId = mejeriId, CategoryName = "Mejeri" },
+                new Category{CategoryId = charkId, CategoryName = "Chark" }};
+                sut.Create(categories);
                 var unitOfWork = new UnitOfWork(_context);
                 unitOfWork.Save();
                 var cat = categories.First();
-                cat.Name = "M";
+                cat.CategoryName = "M";
                 sut.Update(cat);
                 unitOfWork.Save();
 
-                Assert.That(_context.Categories.FirstOrDefault(x => x.Id == mejeriId).Name, Is.EqualTo("M"));
+                Assert.That(_context.Categories.FirstOrDefault(x => x.CategoryId == mejeriId).CategoryName, Is.EqualTo("M"));
             
         }
     }

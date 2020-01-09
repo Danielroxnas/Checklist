@@ -18,9 +18,9 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
         {
 
             var sut = new BaseRepository<Grocery>(_context);
-            sut.Inserts(new List<Grocery>{
-                new Grocery {Id = Guid.NewGuid(), Name = "Bananer", CategoryId = Guid.NewGuid() },
-                new Grocery{Id = Guid.NewGuid(), Name = "Te", CategoryId = Guid.NewGuid() }});
+            sut.Create(new List<Grocery>{
+                new Grocery {GroceryId = Guid.NewGuid(), GroceryName = "Bananer", Category = new Category() },
+                new Grocery{GroceryId = Guid.NewGuid(), GroceryName = "Te", Category = new Category() } });
             var unitOfWork = new UnitOfWork(_context);
             unitOfWork.Save();
             var result = sut.Get(null, null).ToList();
@@ -31,9 +31,9 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
         public void It_shall_get_groceries_based_on_skip()
         {
             var sut = new BaseRepository<Grocery>(_context);
-            sut.Inserts(new List<Grocery>{
-                new Grocery {Id = Guid.NewGuid(), Name = "Bananer", CategoryId = Guid.NewGuid() },
-                new Grocery{Id = Guid.NewGuid(), Name = "Te", CategoryId = Guid.NewGuid() }});
+            sut.Create(new List<Grocery>{
+                new Grocery {GroceryId = Guid.NewGuid(), GroceryName = "Bananer", Category = new Category()  },
+                new Grocery{GroceryId = Guid.NewGuid(), GroceryName = "Te", Category = new Category()  } });
             var unitOfWork = new UnitOfWork(_context);
             unitOfWork.Save();
             var result = sut.Get(1, null).ToList();
@@ -45,9 +45,9 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
         public void It_shall_get_groceries_based_on_take()
         {
             var sut = new BaseRepository<Grocery>(_context);
-            sut.Inserts(new List<Grocery>{
-                new Grocery {Id = Guid.NewGuid(), Name = "Bananer", CategoryId = Guid.NewGuid() },
-                new Grocery{Id = Guid.NewGuid(), Name = "Te", CategoryId = Guid.NewGuid() }});
+            sut.Create(new List<Grocery>{
+                new Grocery {GroceryId = Guid.NewGuid(), GroceryName = "Bananer", Category = new Category()},
+                new Grocery{GroceryId = Guid.NewGuid(), GroceryName = "Te", Category = new Category()} });
             var unitOfWork = new UnitOfWork(_context);
             unitOfWork.Save();
             var result = sut.Get(null, 1).ToList();
@@ -62,9 +62,9 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
             var mejeriId = Guid.NewGuid();
             var charkId = Guid.NewGuid();
             var sut = new BaseRepository<Category>(_context);
-            sut.Inserts(new List<Category>{
-                new Category {Id = mejeriId, Name = "Mejeri" },
-                new Category{Id = charkId, Name = "Chark" }});
+            sut.Create(new List<Category>{
+                new Category {CategoryId = mejeriId, CategoryName = "Mejeri" },
+                new Category{CategoryId = charkId, CategoryName = "Chark" }});
             var unitOfWork = new UnitOfWork(_context);
             unitOfWork.Save();
             var result = sut.Get(null, null).ToList();

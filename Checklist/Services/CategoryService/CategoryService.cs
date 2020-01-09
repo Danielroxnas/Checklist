@@ -27,11 +27,18 @@ namespace Checklist.Services
             return _repository.GetById(id);
         }
 
-        public void Insert(Category grocery)
+        public void Create(Category category)
         {
-            _repository.Insert(grocery);
+            _repository.Create(category);
             _unitOfWork.Save();
+        }
 
+        public void Create(IEnumerable<Category> categories)
+        {
+            var existingCategories = _repository.Get(null, null).ToList();
+            var cats = categories.Where(x => !existingCategories.Select(y => y.CategoryName).Contains(x.CategoryName));
+            _repository.Create(cats);
+            _unitOfWork.Save();
         }
     }
 }

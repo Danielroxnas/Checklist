@@ -21,50 +21,65 @@ namespace Checklist.Migrations
 
             modelBuilder.Entity("Checklist.Models.Category", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("CategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Checklist.Models.Grocery", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("GroceryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("GroceryName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ShoppingListId")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasKey("GroceryId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ShoppingListId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Groceries");
                 });
 
+            modelBuilder.Entity("Checklist.Models.GroceryShoppingList", b =>
+                {
+                    b.Property<Guid>("GroceryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ShoppingListId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("GroceryId", "ShoppingListId");
+
+                    b.HasIndex("ShoppingListId");
+
+                    b.ToTable("GroceryShoppingList");
+                });
+
             modelBuilder.Entity("Checklist.Models.ShoppingList", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ShoppingListId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ShoppingListName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("ShoppingListId");
 
                     b.HasIndex("UserId");
 
@@ -90,14 +105,29 @@ namespace Checklist.Migrations
 
             modelBuilder.Entity("Checklist.Models.Grocery", b =>
                 {
-                    b.HasOne("Checklist.Models.ShoppingList", null)
-                        .WithMany("Groceries")
-                        .HasForeignKey("ShoppingListId");
+                    b.HasOne("Checklist.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+                });
+
+            modelBuilder.Entity("Checklist.Models.GroceryShoppingList", b =>
+                {
+                    b.HasOne("Checklist.Models.Grocery", "Grocery")
+                        .WithMany("GroceryShoppingList")
+                        .HasForeignKey("GroceryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Checklist.Models.ShoppingList", "ShoppingList")
+                        .WithMany("GroceryShoppingList")
+                        .HasForeignKey("ShoppingListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Checklist.Models.ShoppingList", b =>
                 {
-                    b.HasOne("Checklist.Models.User", null)
+                    b.HasOne("Checklist.Models.User", "User")
                         .WithMany("Checklists")
                         .HasForeignKey("UserId");
                 });

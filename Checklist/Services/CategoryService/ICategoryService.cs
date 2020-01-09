@@ -7,7 +7,8 @@ namespace Checklist.Services
     public interface ICategoryService
     {
         IEnumerable<Category> GetAllCategories();
-        void Insert(Category grocery);
+        void Create(Category category);
+        void Create(IEnumerable<Category> categories);
         Category GetCategoryById(Guid id);
     }
 }

@@ -15,15 +15,15 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
         {
             var sut = new BaseRepository<Category>(_context);
             var unitOfWork = new UnitOfWork(_context);
-            var cat = new Category { Id = Guid.NewGuid(), Name = "Delete" };
-            sut.Inserts(new List<Category> { new Category { Id = Guid.NewGuid(), Name = "1" }, new Category { Id = Guid.NewGuid(), Name = "2" } });
-            sut.Insert(cat);
+            var cat = new Category { CategoryId = Guid.NewGuid(), CategoryName = "Delete" };
+            sut.Create(new List<Category> { new Category { CategoryId = Guid.NewGuid(), CategoryName = "1" }, new Category { CategoryId = Guid.NewGuid(), CategoryName = "2" } });
+            sut.Create(cat);
             unitOfWork.Save();
 
             sut.Delete(cat);
             unitOfWork.Save();
 
-            Assert.That(_context.Categories.FirstOrDefault(x => x.Name == "Delete"), Is.Null);
+            Assert.That(_context.Categories.FirstOrDefault(x => x.CategoryName == "Delete"), Is.Null);
             Assert.That(_context.Categories.Count(), Is.EqualTo(2));
         }
 

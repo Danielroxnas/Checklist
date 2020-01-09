@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Checklist.DTO;
 using Checklist.Models;
-using Microsoft.AspNetCore.Http;
+using Checklist.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Checklist.Controllers
@@ -14,20 +11,20 @@ namespace Checklist.Controllers
     public class SettingsController : ControllerBase
     {
         private readonly IGroceryService _groceryService;
+        private readonly ICategoryService _categoryService;
 
-        public SettingsController(IGroceryService groceryService)
+        public SettingsController(IGroceryService groceryService, ICategoryService categoryService)
         {
             _groceryService = groceryService;
+            _categoryService = categoryService;
         }
 
         [HttpPost]
-        public void Save([FromBody]Grocery grocery)
+        public void CreateGrocery([FromBody]GroceryDTO groceryDTO)
         {
-            grocery.Id = Guid.NewGuid();
-            _groceryService.Save(grocery);
-
+            var category = _categoryService.GetCategoryById(groceryDTO.CategoryId);
+            var grocery = new Grocery(groceryDTO.GroceryName, category);
+            _groceryService.Create(grocery);
         }
-
-
     }
 }

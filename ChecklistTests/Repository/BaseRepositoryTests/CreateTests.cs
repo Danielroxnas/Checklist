@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace ChecklistTests.Repository.BaseRepositoryTests
 {
-    public class InsertTests : _InMemoryOptions
+    public class CreateTests : _InMemoryOptions
     {
 
         [Test]
@@ -17,12 +17,12 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
             var sut = new BaseRepository<Category>(_context);
 
             var id = Guid.NewGuid();
-            sut.Insert(new Category { Id = id, Name = "Chark" });
+            sut.Create(new Category { CategoryId = id, CategoryName = "Chark" });
             var unitOfWork = new UnitOfWork(_context);
             unitOfWork.Save();
-            Assert.That(_context.Categories.FirstOrDefault(x => x.Id == id), Is.Not.Null);
+            Assert.That(_context.Categories.FirstOrDefault(x => x.CategoryId == id), Is.Not.Null);
             Assert.That(_context.Categories
-                .FirstOrDefault(x => x.Id == id).Name, Is.EqualTo("Chark"));
+                .FirstOrDefault(x => x.CategoryId == id).CategoryName, Is.EqualTo("Chark"));
 
         }
         [Test]
@@ -30,7 +30,7 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
         {
             var sut = new BaseRepository<Category>(_context);
 
-            Assert.Throws<ArgumentNullException>(() => sut.Insert(null));
+            Assert.Throws<ArgumentNullException>(() => sut.Create((Category)null));
         }
 
         [Test]
@@ -38,15 +38,15 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
         {
             var id = Guid.NewGuid();
             var entity = new Grocery
-            { Id = id, Name = "Bananer", CategoryId = Guid.NewGuid() };
+            { GroceryId = id, GroceryName = "Bananer", Category = new Category() };
             var sut = new BaseRepository<Grocery>(_context);
 
-            sut.Insert(entity);
+            sut.Create(entity);
             var unitOfWork = new UnitOfWork(_context);
             unitOfWork.Save();
-            Assert.That(_context.Groceries.FirstOrDefault(x => x.Id == id), Is.Not.Null);
+            Assert.That(_context.Groceries.FirstOrDefault(x => x.GroceryId == id), Is.Not.Null);
             Assert.That(_context.Groceries
-                .FirstOrDefault(x => x.Id == id).Name, Is.EqualTo("Bananer"));
+                .FirstOrDefault(x => x.GroceryId == id).GroceryName, Is.EqualTo("Bananer"));
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
         {
             var sut = new BaseRepository<Category>(_context);
 
-            Assert.Throws<ArgumentNullException>(() => sut.Insert(null));
+            Assert.Throws<ArgumentNullException>(() => sut.Create((Category)null));
         }
         [Test]
         public void It_should_insert_a_shopping_list()
@@ -62,18 +62,14 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
             var id = Guid.NewGuid();
             var sut = new BaseRepository<ShoppingList>(_context);
 
-            sut.Insert(new ShoppingList
+            sut.Create(new ShoppingList
             {
-                Id = id,
-                Groceries = new List<Grocery> {
-                    new Grocery { Id = Guid.NewGuid(), CategoryId = Guid.NewGuid(), Name = "Bananer" }
-                }
+                ShoppingListId = id
             });
             var unitOfWork = new UnitOfWork(_context);
             unitOfWork.Save();
 
-            Assert.That(_context.ShoppingList.FirstOrDefault(x => x.Id == id), Is.Not.Null);
-            Assert.That(_context.ShoppingList.FirstOrDefault(x => x.Id == id).Groceries.Select(x => x.Name).First(), Is.EqualTo("Bananer"));
+            Assert.That(_context.ShoppingList.FirstOrDefault(x => x.ShoppingListId == id), Is.Not.Null);
 
         }
         [Test]
@@ -81,7 +77,7 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
         {
             var sut = new BaseRepository<ShoppingList>(_context);
 
-            Assert.Throws<ArgumentNullException>(() => sut.Insert(null));
+            Assert.Throws<ArgumentNullException>(() => sut.Create((ShoppingList)null));
 
         }
         [Test]
@@ -90,16 +86,16 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
             var bananerId = Guid.NewGuid();
             var teId = Guid.NewGuid();
             var sut = new BaseRepository<Grocery>(_context);
-            sut.Inserts(new List<Grocery>{
-                new Grocery {Id = bananerId, Name = "Bananer", CategoryId = Guid.NewGuid() },
-                new Grocery{Id = teId, Name = "Te", CategoryId = Guid.NewGuid() }});
+            sut.Create(new List<Grocery>{
+                new Grocery {GroceryId = bananerId, GroceryName = "Bananer", Category = new Category() },
+                new Grocery{GroceryId = teId, GroceryName = "Te", Category = new Category() }});
             var unitOfWork = new UnitOfWork(_context);
             unitOfWork.Save();
-            Assert.That(_context.Groceries.FirstOrDefault(x => x.Id == bananerId), Is.Not.Null);
+            Assert.That(_context.Groceries.FirstOrDefault(x => x.GroceryId == bananerId), Is.Not.Null);
             Assert.That(_context.Groceries
-                .FirstOrDefault(x => x.Id == bananerId).Name, Is.EqualTo("Bananer"));
+                .FirstOrDefault(x => x.GroceryId == bananerId).GroceryName, Is.EqualTo("Bananer"));
             Assert.That(_context.Groceries
-                .FirstOrDefault(x => x.Id == teId).Name, Is.EqualTo("Te"));
+                .FirstOrDefault(x => x.GroceryId == teId).GroceryName, Is.EqualTo("Te"));
 
         }
         [Test]
@@ -107,7 +103,7 @@ namespace ChecklistTests.Repository.BaseRepositoryTests
         {
             var sut = new BaseRepository<Grocery>(_context);
 
-            Assert.Throws<ArgumentNullException>(() => sut.Inserts(null));
+            Assert.Throws<ArgumentNullException>(() => sut.Create((List<Grocery>)null));
         }
     }
 }

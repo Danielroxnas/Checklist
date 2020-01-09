@@ -19,20 +19,26 @@ namespace Checklist.Controllers
             _categoryService = categoryService;
         }
         [HttpGet]
-        public List<Category> GetAllCategories()
+        public List<Category> AllCategories()
         {
             return _categoryService.GetAllCategories()?.ToList();
         }
         [HttpGet]
-        public Category GetCategory(Category category)
+        public Category Category(Category category)
         {
-            return _categoryService.GetCategoryById(category.Id);
+            return _categoryService.GetCategoryById(category.CategoryId);
         }
         [HttpPost]
-        public void SaveCategory(string name)
+        public void Category([FromBody]string name)
         {
-            var category = new Category { Id = Guid.NewGuid(), Name = name };
-            _categoryService.Insert(category);
+            var category = new Category { CategoryId = Guid.NewGuid(), CategoryName = name };
+            _categoryService.Create(category);
+        }
+        [HttpPost]
+        public void Categories([FromBody]List<string> names)
+        {
+            var categories = names.Select(x => new Category { CategoryId = Guid.NewGuid(), CategoryName = x }).ToList();
+            _categoryService.Create(categories);
         }
     }
 }

@@ -1,14 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Checklist.Models
 {
     public class Grocery
     {
-        [Key]
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public Guid CategoryId { get; set; }
+        public Grocery()
+        {
+
+        }
+
+        public Grocery(string groceryName, Category category)
+        {
+            GroceryName = groceryName;
+            Category = category;
+            GroceryId = Guid.NewGuid();
+        }
+
+        public Grocery(Guid groceryId, string groceryName, Category category)
+        {
+            GroceryId = groceryId;
+            GroceryName = groceryName;
+            Category = category;
+        }
+
+        [Required]
+        public Guid GroceryId { get; set; }
+        public string GroceryName { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual ICollection<GroceryShoppingList> GroceryShoppingList { get; set; }
 
     }
 }

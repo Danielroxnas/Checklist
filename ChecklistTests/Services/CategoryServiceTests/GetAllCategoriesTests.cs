@@ -18,8 +18,8 @@ namespace ChecklistTests.Services.CategoryServiceTests
             var unitOfWork = Mock.Of<IUnitOfWork>();
             
             var categories = new List<Category> {
-                new Category { Id = Guid.NewGuid(), Name = "cat1" },
-                new Category { Id = Guid.NewGuid(), Name = "cat2" }} ;
+                new Category { CategoryId = Guid.NewGuid(), CategoryName = "cat1" },
+                new Category { CategoryId = Guid.NewGuid(), CategoryName = "cat2" }} ;
             
             Mock.Get(repository).Setup(x => x.Get(null,null)).Returns(categories);
 
