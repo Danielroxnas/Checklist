@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
-import { Categories } from './components/Categories';
+import { Category } from './components/Cat';
 import { Counter } from './components/Counter';
 
 import './custom.css'
@@ -15,7 +15,7 @@ export default class App extends Component {
       <Layout>
         <Route exact path='/' component={Home} />
         <Route path='/counter' component={Counter} />
-            <Route path='/categories' component={Categories} />
+        <Route path='/fetch-data1' component={FetchData1} />
       </Layout>
     );
   }

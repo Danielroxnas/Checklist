@@ -1,7 +1,7 @@
 ﻿using Checklist.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Checklist.Entity
+namespace Checklist.Context
 {
     public class ChecklistContext : DbContext
     {
@@ -13,6 +13,7 @@ namespace Checklist.Entity
         public DbSet<ShoppingList> ShoppingList { get; set; }
         public DbSet<Grocery> Groceries { get; set; }
         public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<GroceryShoppingList>()

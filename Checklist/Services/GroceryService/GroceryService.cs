@@ -1,7 +1,5 @@
-﻿using Checklist.DTO;
-using Checklist.Models;
+﻿using Checklist.Models;
 using Checklist.Repository;
-using Checklist.Services;
 
 namespace Checklist.Services
 {
@@ -15,8 +13,6 @@ namespace Checklist.Services
             _baseRepository = baseRepository;
             _unitOfWork = unitOfWork;
         }
-
-
         public void Create(Grocery grocery)
         {
             _baseRepository.Create(grocery);

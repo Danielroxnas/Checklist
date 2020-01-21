@@ -1,4 +1,4 @@
-﻿using Checklist.Entity;
+﻿using Checklist.Context;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System;

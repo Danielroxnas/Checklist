@@ -11,21 +11,38 @@ namespace ChecklistTests.Services.CategoryServiceTests
 {
     public class GetAllCategoriesTests
     {
-        [Test]
-        public void It_should_get_all_categories()
+        private IBaseRepository<Category> _repository;
+        private IUnitOfWork _unitOfWork;
+        private List<Category> _categories;
+        private CategoryService _sut;
+
+        [SetUp]
+        public void Setup()
         {
-            var repository = Mock.Of<IBaseRepository<Category>>();
-            var unitOfWork = Mock.Of<IUnitOfWork>();
+            _repository = Mock.Of<IBaseRepository<Category>>();
+            _unitOfWork = Mock.Of<IUnitOfWork>();
             
-            var categories = new List<Category> {
+            _categories = new List<Category> {
                 new Category { CategoryId = Guid.NewGuid(), CategoryName = "cat1" },
                 new Category { CategoryId = Guid.NewGuid(), CategoryName = "cat2" }} ;
             
-            Mock.Get(repository).Setup(x => x.Get(null,null)).Returns(categories);
+            Mock.Get(_repository).Setup(x => x.Get(null,null)).Returns(() => _categories);
 
-            var sut = new CategoryService(repository, unitOfWork);
-            var result = sut.GetAllCategories();
+            _sut = new CategoryService(_repository, _unitOfWork);
+
+        }
+        [Test]
+        public void It_should_get_all_categories()
+        {
+            var result = _sut.GetAllCategories();
             Assert.That(result.Count(), Is.EqualTo(2));
+        }
+
+        [Test]
+        public void It_should_throw_if_no_categories_was_found()
+        {
+            _categories = null;
+            Assert.Throws<ArgumentNullException>(() => _sut.GetAllCategories());
         }
     }
 }

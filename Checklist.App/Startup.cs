@@ -1,15 +1,14 @@
-using Checklist.Context;
-using Checklist.Repository;
-using Checklist.Services;
+using Checklist.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
-namespace Checklist
+namespace Checklist.App
 {
     public class Startup
     {
@@ -23,13 +22,11 @@ namespace Checklist
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ChecklistContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddControllersWithViews();
-            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IGroceryService, GroceryService>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddMvc()
+                .AddApplicationPart(typeof(CategoryController).GetTypeInfo().Assembly);
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -50,15 +47,13 @@ namespace Checklist
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            using (var scope =
-                app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            using (var context = scope.ServiceProvider.GetService<ChecklistContext>())
-                context.Database.Migrate();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            
 
             app.UseEndpoints(endpoints =>
             {

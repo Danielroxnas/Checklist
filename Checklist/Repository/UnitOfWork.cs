@@ -1,4 +1,4 @@
-﻿using Checklist.Entity;
+﻿using Checklist.Context;
 
 namespace Checklist.Repository
 {

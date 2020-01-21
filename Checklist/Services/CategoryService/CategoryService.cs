@@ -17,15 +17,11 @@ namespace Checklist.Services
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Category> GetAllCategories()
-        {
-            return _repository.Get(null,null);
-        }
-
-        public Category GetCategoryById(Guid id)
-        {
-            return _repository.GetById(id);
-        }
+        public IEnumerable<Category> GetAllCategories() => 
+            _repository.Get(null,null) ?? throw new ArgumentNullException();
+        
+        public Category GetCategoryById(Guid id) => 
+            _repository.GetById(id) ?? throw new ArgumentNullException();
 
         public void Create(Category category)
         {
@@ -35,9 +31,13 @@ namespace Checklist.Services
 
         public void Create(IEnumerable<Category> categories)
         {
-            var existingCategories = _repository.Get(null, null).ToList();
-            var cats = categories.Where(x => !existingCategories.Select(y => y.CategoryName).Contains(x.CategoryName));
-            _repository.Create(cats);
+            var existingCategories = _repository.Get(null, null)?.ToList();
+            
+            if(existingCategories != null)
+            {
+                categories = categories.Where(x => !existingCategories.Select(y => y.CategoryName).Contains(x.CategoryName));
+            }
+            _repository.Create(categories);
             _unitOfWork.Save();
         }
     }

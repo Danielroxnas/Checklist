@@ -7,15 +7,13 @@ namespace Checklist.Models
     public class Grocery
     {
         public Grocery()
-        {
-
-        }
+        {}
 
         public Grocery(string groceryName, Category category)
         {
+            GroceryId = Guid.NewGuid();
             GroceryName = groceryName;
             Category = category;
-            GroceryId = Guid.NewGuid();
         }
 
         public Grocery(Guid groceryId, string groceryName, Category category)

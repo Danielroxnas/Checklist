@@ -1,7 +1,7 @@
 ﻿using Checklist.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Checklist.Entity
+namespace Checklist.Context
 {
     public interface IChecklistContext
     {
