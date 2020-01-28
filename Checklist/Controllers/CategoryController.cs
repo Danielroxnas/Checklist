@@ -18,26 +18,30 @@ namespace Checklist.Controllers
         {
             _categoryService = categoryService;
         }
+
         [HttpGet]
         public List<Category> AllCategories()
         {
-            return _categoryService.GetAllCategories()?.ToList();
+            return _categoryService.GetAllCategories()?.ToList() ?? new List<Category>();
         }
+
         [HttpGet]
         public Category Category(Category category)
         {
             return _categoryService.GetCategoryById(category.CategoryId);
         }
+
         [HttpPost]
-        public void Category([FromBody]string name)
+        public void Category([FromBody]string categoryName)
         {
-            var category = new Category { CategoryId = Guid.NewGuid(), CategoryName = name };
+            var category = new Category() { CategoryId = Guid.NewGuid(), CategoryName = categoryName };
             _categoryService.Create(category);
         }
+
         [HttpPost]
         public void Categories([FromBody]List<string> names)
         {
-            var categories = names.Select(x => new Category { CategoryId = Guid.NewGuid(), CategoryName = x }).ToList();
+            var categories = names.Select(x => new Category() { CategoryId = Guid.NewGuid(), CategoryName = x }).ToList();
             _categoryService.Create(categories);
         }
     }

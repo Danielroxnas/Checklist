@@ -23,7 +23,7 @@ namespace Checklist.Controllers
         public void CreateGrocery([FromBody]GroceryDTO groceryDTO)
         {
             var category = _categoryService.GetCategoryById(groceryDTO.CategoryId);
-            var grocery = new Grocery(groceryDTO.GroceryName, category);
+            var grocery = new Grocery { GroceryName = groceryDTO.GroceryName, Category = category };
             _groceryService.Create(grocery);
         }
     }

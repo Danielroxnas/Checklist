@@ -1,5 +1,6 @@
 ﻿using Checklist.Models;
 using Checklist.Repository;
+using System;
 
 namespace Checklist.Services
 {
@@ -13,10 +14,12 @@ namespace Checklist.Services
             _baseRepository = baseRepository;
             _unitOfWork = unitOfWork;
         }
-        public void Create(Grocery grocery)
+        public Grocery Create(Grocery grocery)
         {
+            grocery.GroceryId = Guid.NewGuid();
             _baseRepository.Create(grocery);
             _unitOfWork.Save();
+            return grocery;
         }
     }
 }

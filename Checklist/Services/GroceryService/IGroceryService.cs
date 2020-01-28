@@ -5,6 +5,6 @@ namespace Checklist.Services
 {
     public interface IGroceryService
     {
-        void Create(Grocery grocery);
+        Grocery Create(Grocery grocery);
     }
 }

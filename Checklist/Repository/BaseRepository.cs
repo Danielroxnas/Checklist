@@ -18,13 +18,14 @@ namespace Checklist.Repository
             _dbset = _checklistContext.Set<T>();
         }
 
-        public void Create(T entity)
+        public T Create(T entity)
         {
             if (entity is null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
             _dbset.Add(entity);
+            return entity;
         }
 
         public IEnumerable<T> GetByExpression(Expression<Func<T, bool>> expression)
@@ -37,13 +38,14 @@ namespace Checklist.Repository
             return _dbset.Find(id);
         }
 
-        public void Create(IEnumerable<T> entities)
+        public IEnumerable<T> Create(IEnumerable<T> entities)
         {
             if (entities is null)
             {
                 throw new ArgumentNullException(nameof(entities));
             }
             _dbset.AddRange(entities);
+            return entities;
         }
 
         public void Update(T entity)

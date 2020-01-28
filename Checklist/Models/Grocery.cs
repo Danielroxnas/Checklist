@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Checklist.Models
 {
@@ -26,6 +27,9 @@ namespace Checklist.Models
         [Required]
         public Guid GroceryId { get; set; }
         public string GroceryName { get; set; }
+        [ForeignKey("categoryId")]
+        public virtual Guid CategoryId { get; set; }
+
         public virtual Category Category { get; set; }
         public virtual ICollection<GroceryShoppingList> GroceryShoppingList { get; set; }
 
