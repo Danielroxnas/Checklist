@@ -24,7 +24,6 @@ public class GroceryInputType : InputObjectGraphType<Grocery>
 {
     public GroceryInputType()
     {
-        Name = "GroceryInputType";
         Field(_ => _.GroceryName);
     }
 }
