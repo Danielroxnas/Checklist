@@ -7,24 +7,24 @@ namespace Checklist.Models
 {
     public class Grocery
     {
-        public Grocery()
-        {}
+        //public Grocery()
+        //{ }
 
-        public Grocery(string groceryName, Category category)
-        {
-            GroceryId = Guid.NewGuid();
-            GroceryName = groceryName;
-            Category = category;
-        }
+        //public Grocery(string groceryName, Category category)
+        //{
+        //    GroceryId = Guid.NewGuid();
+        //    GroceryName = groceryName;
+        //    Category = category;
+        //}
 
-        public Grocery(Guid groceryId, string groceryName, Category category)
-        {
-            GroceryId = groceryId;
-            GroceryName = groceryName;
-            Category = category;
-        }
+        //public Grocery(Guid groceryId, string groceryName, Category category)
+        //{
+        //    GroceryId = groceryId;
+        //    GroceryName = groceryName;
+        //    Category = category;
+        //}
 
-        [Required]
+        //[Key]
         public Guid GroceryId { get; set; }
         public string GroceryName { get; set; }
         [ForeignKey("categoryId")]

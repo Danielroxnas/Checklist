@@ -2,6 +2,7 @@
 using Checklist.Models;
 using Checklist.Repository;
 using GraphQL.Types;
+using System;
 
 public class AppQuery : ObjectGraphType
 {
@@ -9,7 +10,17 @@ public class AppQuery : ObjectGraphType
     {
         Field<ListGraphType<GroceryType>>(
             "groceries",
-        resolve: context => groceryRepository.Get(null, null)); 
+        resolve: context => groceryRepository.Get(null, null));
+
+        Field<GroceryType>(
+            "grocery",
+            arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "groceryId" }),
+            resolve: context =>
+            {
+                var id = context.GetArgument<Guid>("groceryId");
+                return groceryRepository.GetById(id);
+            }
+        );
 
         Field<ListGraphType<CategoryType>>(
             "categories",

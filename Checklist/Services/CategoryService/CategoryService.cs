@@ -17,28 +17,40 @@ namespace Checklist.Services
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Category> GetAllCategories() => 
-            _repository.Get(null,null) ?? throw new ArgumentNullException();
-        
-        public Category GetCategoryById(Guid id) => 
+        public IEnumerable<Category> GetAllCategories() =>
+            _repository.Get(null, null) ?? throw new ArgumentNullException();
+
+        public Category GetCategoryById(Guid id) =>
             _repository.GetById(id) ?? throw new ArgumentNullException();
 
-        public void Create(Category category)
+        public Category Create(Category category)
         {
+            category.CategoryId = Guid.NewGuid();
             _repository.Create(category);
             _unitOfWork.Save();
+            return category;
         }
 
-        public void Create(IEnumerable<Category> categories)
+        public IEnumerable<Category> Create(IEnumerable<Category> categories)
         {
-            var existingCategories = _repository.Get(null, null)?.ToList();
-            
-            if(existingCategories != null)
+            var cats = categories?.Where(x => x != null).ToList();
+            if(cats == null || cats.Count == 0)
             {
-                categories = categories.Where(x => !existingCategories.Select(y => y.CategoryName).Contains(x.CategoryName));
+                return null;
             }
-            _repository.Create(categories);
+            var existingCategories = _repository.Get(null, null)?.ToList();
+
+            if (existingCategories != null)
+            {
+                categories = cats?.Where(x => !existingCategories.Select(y => y.CategoryName).Contains(x?.CategoryName));
+
+            }
+            cats.ToList().ForEach(x => x.CategoryId = Guid.NewGuid());
+            _repository.Create(cats);
             _unitOfWork.Save();
+            return categories;
+
+
         }
     }
 }

@@ -5,6 +5,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChecklistTests.Services.CategoryServiceTests
 {
@@ -45,6 +46,32 @@ namespace ChecklistTests.Services.CategoryServiceTests
 
             Mock.Get(_repository).Verify(x => x.Create(categories), Times.Once);
             Mock.Get(_uow).Verify(x => x.Save(), Times.Once);
+        }
+        [Test]
+        public void It_should_add_guid_to_new_categories()
+        {
+            var categories = new List<Category> { new Category { CategoryName = "Test" } };
+            var result = _sut.Create(categories);
+
+            Assert.That(result.First().CategoryId, Is.Not.EqualTo(Guid.Empty));
+        }
+
+        [Test]
+        public void It_should_return_null_if_no_categories()
+        {
+            var categories = new List<Category> { null };
+            var result = _sut.Create(categories);
+
+            Assert.That(result, Is.Null);
+        }
+
+        [Test]
+        public void It_should_return_null_if_categories_is_null()
+        {
+            List<Category> categories = null;
+            var result = _sut.Create(categories);
+
+            Assert.That(result, Is.Null);
         }
     }
 }

@@ -15,8 +15,7 @@ namespace Checklist.GraphQL.GraphQLSchema
                 "category",
                 resolve: context =>
                 {
-                    var grocery = context.Source as Grocery;
-                    return categoryService.GetCategoryById(grocery.CategoryId);
+                    return categoryService.GetCategoryById(context.Source.CategoryId);
                 }
             );
         }
